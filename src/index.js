@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: '*', // tighten this to your actual client domain before going live
+    origin: 'https://dumpzone.vercel.app/', // tighten this to your actual client domain before going live
   },
 });
 

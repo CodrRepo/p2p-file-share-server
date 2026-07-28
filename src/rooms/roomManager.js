@@ -22,11 +22,14 @@ function createRoom(socketId) {
 }
 
 function joinRoom(roomCode, socketId) {
-  const room = rooms.get(roomCode);
+  let room = rooms.get(roomCode);
 
   if (!room) {
-    return { success: false, error: 'Room not found' };
+    // Auto-create room for direct device-to-device connections
+    room = new Set();
+    rooms.set(roomCode, room);
   }
+  
   if (room.size >= MAX_PEERS_PER_ROOM) {
     return { success: false, error: 'Room is full' };
   }

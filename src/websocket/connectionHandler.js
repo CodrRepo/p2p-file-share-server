@@ -2,7 +2,22 @@ const messageHandler = require('./messageHandler');
 
 function handleConnection(io, socket) {
   socket.roomCode = null;
+  socket.deviceId = null;
 
+  // --- Device Identity events ---
+  socket.on('register-device', (payload) => {
+    messageHandler.handleRegisterDevice(io, socket, payload);
+  });
+
+  socket.on('connect-request', (payload) => {
+    messageHandler.handleConnectRequest(io, socket, payload);
+  });
+
+  socket.on('connection-response', (payload) => {
+    messageHandler.handleConnectionResponse(io, socket, payload);
+  });
+
+  // --- Existing room / relay events ---
   socket.on('create-room', () => {
     messageHandler.handleCreateRoom(io, socket);
   });

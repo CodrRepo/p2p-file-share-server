@@ -12,15 +12,17 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://dumpzone.vercel.app",
-    methods: ["GET", "POST"],
-    credentials: true              
-  }
+    origin: config.CORS_ALLOWED_ORIGINS,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
 });
 
 app.get('/', (req, res) => {
   res.send('Signaling server is running');
 });
+
+// console.log('CORS allowed origins:', config.CORS_ALLOWED_ORIGINS);
 
 io.on('connection', (socket) => {
   handleConnection(io, socket);
